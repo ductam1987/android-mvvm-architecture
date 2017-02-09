@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
+        <variable
+            name="isFavorite"
+            type="boolean" />
+
+        <variable
+            name="result"
+            type="com.android_mvvm.model.Results" />
+
+        <variable
+            name="activity"
+            type="com.android_mvvm.view.MovieDetailActivity" />
+    </data>
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_movie_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.android_mvvm.view.MovieDetailActivity">
+
+        <ProgressBar
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateTint="?android:colorAccent"
+            android:indeterminateTintMode="src_in"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}" />
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="5dp"
+            card_view:cardMaxElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/textColorPrimary"
+                android:padding="8dp">
+
+                <!-- Thumbnail Image -->
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/movie_detail_thumbnail"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    app:imageUrl="@{result.imageUrl}" />
+
+                <!-- Movie movie_detail_title -->
+                <TextView
+                    android:id="@+id/movie_detail_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/movie_detail_thumbnail"
+                    android:text="@{result.title()}"
+                    android:textSize="@dimen/title"
+                    android:textStyle="bold" />
+
+                <!-- Rating -->
+                <TextView
+                    android:id="@+id/movie_detail_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/movie_detail_title"
+                    android:layout_marginTop="1dip"
+                    android:text="@{result.overview()}"
+                    android:textSize="@dimen/rating" />
+
+                <FrameLayout
+                    android:id="@+id/layout_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/movie_detail_overview"
+                    android:layout_marginTop="8dp">
+
+                    <ImageView
+                        android:id="@+id/character_detail_img_fav"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:onClick="@{()-> activity.favoriteMovie()}"
+                        android:src="@drawable/un_favorite"
+                        android:visibility="@{!isFavorite ? View.VISIBLE : View.GONE}" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/favorite"
+                        android:visibility="@{isFavorite ? View.VISIBLE : View.GONE}" />
+
+                </FrameLayout>
+
+                <!-- Release Year -->
+                <TextView
+                    android:id="@+id/movie_detail_release"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/movie_detail_overview"
+                    android:text="@{result.release_date()}"
+                    android:textColor="@color/year"
+                    android:textSize="@dimen/year" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <!-- filter drawer -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_movies_similar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/card_view"
+            android:clipToPadding="true"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
+            android:visibility="@{!isLoading ? View.VISIBLE : View.GONE}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    </RelativeLayout>
+
+</layout>
