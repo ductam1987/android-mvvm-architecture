@@ -10,8 +10,7 @@
             type="boolean" />
     </data>
 
-    <FrameLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -23,9 +22,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
             android:indeterminateTint="?android:colorAccent"
-            android:indeterminateTintMode="src_in"/>
+            android:indeterminateTintMode="src_in"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}" />
 
         <!-- filter drawer -->
         <android.support.v7.widget.RecyclerView
@@ -33,9 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="true"
-            android:visibility="@{!isLoading ? View.VISIBLE : View.GONE}"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            android:visibility="gone"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        <!-- android:visibility="@{!isLoading ? View.VISIBLE : View.GONE}"-->
     </FrameLayout>
 </layout>

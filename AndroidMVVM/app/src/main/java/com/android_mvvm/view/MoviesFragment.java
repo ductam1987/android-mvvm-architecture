@@ -86,6 +86,9 @@ public class MoviesFragment extends BaseFragment<FragmentMoviesBinding,MoviesFra
         }
         binding.setIsLoading(false);
         if(results != null) {
+            if(binding.listMovies.getVisibility() == View.GONE){
+                binding.listMovies.setVisibility(View.VISIBLE);
+            }
             resultsMaster.addAll(results);
             if(moviesAdapter == null){
                 moviesAdapter = new MoviesAdapter();
